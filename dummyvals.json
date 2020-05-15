@@ -1,0 +1,48 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "userName": "Achilles",
+      "email": "achilll@gmail.com",
+      "accessToken": "93f39e2f-80de-4033-99ee-249d92736a25"
+    },
+    {
+      "id": 2,
+      "userName": "Balthasar",
+      "email": "baltik@emajl.cz",
+      "accessToken": "dcb20f8a-5657-4f1b-9f7f-ce65739b359e"
+    }
+  ],
+  "endpoints": [
+    {
+      "id": 1,
+      "name": "endpoint_milano",
+      "url": "https://stackoverflow.com/",
+      "monitoredInterval": 4000,
+      "userId": 1
+    },
+    {
+      "id": 2,
+      "name": "endpoint_bern",
+      "url": "http://192.168.0.107/",
+      "monitoredInterval": 54000,
+      "userId": 1
+    }
+  ],
+  "results": [
+    {
+      "id": 1,
+      "checkDate": "2020-05-08T07:46:51.716Z",
+      "statusCode": 400,
+      "payload": "somepayload",
+      "endpointId": 1
+    },
+    {
+      "id": 2,
+      "checkDate": "2020-05-08T07:59:22.716Z",
+      "statusCode": 200,
+      "payload": "anotherpayload",
+      "endpointId": 1
+    }
+  ]
+}
