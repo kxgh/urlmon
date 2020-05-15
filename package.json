@@ -7,6 +7,10 @@
     "test": "babel-node ./node_modules/mocha/bin/mocha ./server/test --timeout 35000 --test",
     "build": "babel -d ./build ./server"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kxgh/urlmon.git"
+  },
   "dependencies": {
     "axios": "^0.19.2",
     "dotenv": "^8.2.0",
