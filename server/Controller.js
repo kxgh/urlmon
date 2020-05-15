@@ -4,6 +4,7 @@ import {EventEmitter} from "events";
 import {EV_ENDPOINT_CREATED, EV_ENDPOINT_DELETED, EV_ENDPOINT_MODIFIED, getErrStatusCode} from "./constants";
 
 const AUTHD_USER_ID = 'authUserId';
+const prs = arg => parseInt(arg) || -1;
 
 export default class RestMiddleware extends EventEmitter {
 
@@ -48,7 +49,7 @@ export default class RestMiddleware extends EventEmitter {
 
         this.updateEndpoint = async (req, res, next) => {
             try {
-                const updated = await this.dao.updateEndpoint(req[AUTHD_USER_ID], parseInt(req.params.endpointId), req.body);
+                const updated = await this.dao.updateEndpoint(req[AUTHD_USER_ID], prs(req.params.endpointId), req.body);
                 this.emit(EV_ENDPOINT_MODIFIED, updated);
                 res.send(200, {updated});
             } catch ({message}) {
@@ -59,7 +60,7 @@ export default class RestMiddleware extends EventEmitter {
 
         this.deleteEndpoint = async (req, res, next) => {
             try {
-                const deletedId = await this.dao.deleteEndpoint(req[AUTHD_USER_ID], parseInt(req.params.endpointId));
+                const deletedId = await this.dao.deleteEndpoint(req[AUTHD_USER_ID], prs(req.params.endpointId));
                 this.emit(EV_ENDPOINT_DELETED, deletedId);
                 res.send(200, {deletedId});
             } catch ({message}) {
@@ -70,7 +71,7 @@ export default class RestMiddleware extends EventEmitter {
 
         this.getEndpoint = async (req, res, next) => {
             try {
-                const endpoint = await this.dao.getEndpoint(req[AUTHD_USER_ID], parseInt(req.params.endpointId));
+                const endpoint = await this.dao.getEndpoint(req[AUTHD_USER_ID], prs(req.params.endpointId));
                 res.send(200, {endpoint});
             } catch ({message}) {
                 console.warn(message);
