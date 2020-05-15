@@ -22,7 +22,7 @@ export default class MonitoredEndpoint extends Model {
         this.userId = props.userId;
     }
 
-    static getAttributes(referencedModel) {
+    static getAttributes() {
         return {
             id: {
                 type: DataTypes.INTEGER.UNSIGNED,

@@ -94,7 +94,6 @@ class DbDao extends Dao {
     }
 
     async listMonitoringResults(authdUserId, endpointId, limit) {
-        console.log('listingmonitoring results with limit ', limit)
         const me = await MonitoredEndpoint.findByPk(endpointId);
         if (!me || me.userId != authdUserId)
             throw new Error(ERR_UNAUTHD_NOT_FOUND);
@@ -151,22 +150,19 @@ class DbDao extends Dao {
     }
 
     async addUser(user) {
-        if (typeof user.save === 'function') {
-            await user.save();
-            return user;
-        }
+        if (typeof user.save === 'function')
+            return user.save();
         return User.create(new User(user))
     }
 
     async getAllMonitoredEndpoints(minInterval) {
-        const mes = await MonitoredEndpoint.findAll({
+        return MonitoredEndpoint.findAll({
             where: {
                 monitoredInterval: {
                     [Op.gte]: minInterval
                 }
             }
         });
-        return mes
     }
 }
 

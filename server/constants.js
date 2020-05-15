@@ -5,6 +5,8 @@ export const ERR_UNAUTHD_NOT_FOUND = 'Unauthorized or not found';
 export const ERR_INTERNAL = 'Internal error';
 export const ERR_BAD_REQUEST = 'Bad request';
 
+export const NO_RESP_STATUS = 0;
+
 export const EV_ENDPOINT_CREATED = 'New monitored endpoint created';
 export const EV_ENDPOINT_DELETED = 'Monitored endpoint deleted';
 export const EV_ENDPOINT_MODIFIED = 'Monitored endpoint modified';

@@ -1,5 +1,5 @@
 import Controller from "./Controller";
-import {EV_ENDPOINT_CREATED, EV_ENDPOINT_DELETED, EV_ENDPOINT_MODIFIED, FAKE_PAYLOAD} from "./constants"
+import {NO_RESP_STATUS, EV_ENDPOINT_CREATED, EV_ENDPOINT_DELETED, EV_ENDPOINT_MODIFIED, FAKE_PAYLOAD} from "./constants"
 import MonitoredEndpoint from "./model/MonitoredEndpoint";
 import MonitoringResult from "./model/MonitoringResult";
 import axios from "axios";
@@ -25,15 +25,13 @@ export default class Monitor {
                 setAndClearCheck: (key, check) => {
                     key = parseInt(key);
                     const c = m.get(key);
-                    if (c)
-                        clearInterval(c);
+                    c && clearInterval(c);
                     m.set(key, check);
                 },
                 clearAndDeleteCheck: key => {
                     key = parseInt(key);
                     const c = m.get(key);
-                    if (c)
-                        clearInterval(c);
+                    c && clearInterval(c);
                     m.delete(key);
                 }
             }
@@ -61,7 +59,7 @@ export default class Monitor {
                     checkDate: Date.now()
                 });
             } catch (err) {
-                let statusCode = err.statusCode || 0;
+                let statusCode = err.statusCode || NO_RESP_STATUS;
                 let payload = err.code || err.message || '';
                 if(err.response){
                     statusCode = err.response.statusCode || statusCode;

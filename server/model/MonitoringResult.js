@@ -18,7 +18,7 @@ export default class MonitoringResult extends Model {
         this.endpointId = props.endpointId;
     }
 
-    static getAttributes(referencedModel) {
+    static getAttributes() {
         return {
             id: {
                 type: DataTypes.BIGINT.UNSIGNED,
