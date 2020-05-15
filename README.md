@@ -17,6 +17,9 @@ Then just create a `.env` file with your configuration. See [Configuration](#Con
 
 ## Tests run
 
+Running tests will force to resync, **recreate** all used tables and fill them with test data.
+Use on empty or test db.
+
     npm run test
     
 ## Production build and run
@@ -32,12 +35,12 @@ And then start the production build:
     
 # Configuration
 
-It is necessary to provide a `.env` file with these required params:
+:warning: It is necessary to provide a `.env` file with these required params:
 * `DB_DATABASE` a database urlmon will connect to
 * `DB_USER` existing user in the database with privileges for tables CRUD
 * `DB_PASSWORD` existing user's password
 
-These `.env` params use default values if not no param provided. Optional params: 
+These `.env` params use default values if no param provided: 
 * `DB_HOST` database url. Defaults to `localhost`
 * `DB_PORT` database port. Defaults to `3306`
 * `HOST` service url. Defaults to `localhost`
@@ -152,7 +155,7 @@ With `Content-Type` `application/json` and status code `200`.
 
 ## Create endpoint monitoring
 
-Send a JSON encoded endpoint in this [format](##Endpoint format) using 
+Send a JSON encoded endpoint in this [format](#endpoint-format) using 
 `POST /:user/endpoints`
 
 Response: created monitoring endpoint (see above).
