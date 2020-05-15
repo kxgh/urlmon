@@ -61,9 +61,8 @@ urlmon will create 3 tables upon start:
 # REST API
 
 The REST API to urlmon is described below. Note that all API requests should have user's authentication access token
-in `Authorized` header. Unauthorized result in 403 or 401 error. urlmon will let you know if a user exists by responding
-with a 401 code if unauthorized and 404 if no such user exists. However, it will not let you probe for endpoints: 
-urlmon responds with 403 on both unauthorized or not found.  
+in `Authorized` header. urlmon will let you know if an entity exists by responding
+with a 401 code if unauthorized and 404 if no such target exists.   
  
 
 ## Get list of user's endpoints

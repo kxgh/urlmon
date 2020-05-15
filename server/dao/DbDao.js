@@ -1,11 +1,11 @@
 import {isTesting, ERR_NOT_FOUND, ERR_INTERNAL, ERR_UNAUTHD, ERR_UNAUTHD_NOT_FOUND} from "../constants";
-import {DB_HOST,DB_PORT,DB_DIALECT,DB_TIMEZONE,DB_DATABASE,DB_PASSWORD,DB_USER} from "../constants";
+import {DB_HOST, DB_PORT, DB_DIALECT, DB_TIMEZONE, DB_DATABASE, DB_PASSWORD, DB_USER} from "../constants";
 import Dao from ".";
 import User from "../model/User"
 import MonitoredEndpoint from "../model/MonitoredEndpoint"
 import MonitoringResult from "../model/MonitoringResult"
 
-console.log(`Connecting to ${DB_DATABASE} with ${DB_USER} ${isTesting() ? 'testing.': ''}`);
+console.log(`Connecting to ${DB_DATABASE} with ${DB_USER} ${isTesting() ? 'testing.' : ''}`);
 
 import {Op, Sequelize} from "sequelize";
 
@@ -85,7 +85,7 @@ class DbDao extends Dao {
             }
         });
         if (!delMe)
-            throw new Error(ERR_UNAUTHD_NOT_FOUND)
+            throw new Error(ERR_UNAUTHD)
         return endpointId
     }
 
@@ -95,8 +95,10 @@ class DbDao extends Dao {
 
     async listMonitoringResults(authdUserId, endpointId, limit) {
         const me = await MonitoredEndpoint.findByPk(endpointId);
-        if (!me || me.userId != authdUserId)
-            throw new Error(ERR_UNAUTHD_NOT_FOUND);
+        if (!me)
+            throw new Error(ERR_NOT_FOUND);
+        else if (me.userId != authdUserId)
+            throw new Error(ERR_UNAUTHD);
         const mrs = await me.getMonitoringResults({
             order: [['id', 'DESC']],
             limit: limit
@@ -108,14 +110,18 @@ class DbDao extends Dao {
 
     async getEndpoint(authdUserId, endpointId) {
         const gotMe = await MonitoredEndpoint.findByPk(endpointId)
-        if (!gotMe || gotMe.userId != authdUserId)
-            throw new Error(ERR_UNAUTHD_NOT_FOUND)
+        if (!gotMe)
+            throw new Error(ERR_NOT_FOUND);
+        else if (gotMe.userId != authdUserId)
+            throw new Error(ERR_UNAUTHD);
         return gotMe;
     }
 
     async updateEndpoint(authdUserId, endpointId, endpointProps) {
         let me = await MonitoredEndpoint.findByPk(endpointId);
-        if (me && me.dataValues.userId == authdUserId) {
+        if (!me)
+            throw new Error(ERR_NOT_FOUND);
+        if (me.dataValues.userId == authdUserId) {
             me = me.dataValues;
             // avoid sequelize's me.update()
             Object.assign(me, endpointProps, {id: endpointId, userId: authdUserId});
@@ -125,8 +131,7 @@ class DbDao extends Dao {
                 }
             });
             return new MonitoredEndpoint(me)
-        }
-        throw new Error(ERR_UNAUTHD_NOT_FOUND);
+        } else throw new Error(ERR_UNAUTHD);
     }
 
     async getUserEndpoints(userId) {

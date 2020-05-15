@@ -241,7 +241,7 @@ describe('REST test', async () => {
             assert.equal(delId, me1.id);
             return true
         } catch (err) {
-            assert.equal(err.response.status, 403, 'BAD RESPONSE STATUS');
+            assert.fail('SHOULD PASS WITHOUT EXCEPTION');
             return true;
         }
     });
