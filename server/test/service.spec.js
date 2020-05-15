@@ -90,7 +90,7 @@ describe('REST test', async () => {
             assert.isNotOk(resp);
             return true
         } catch (err) {
-            assert.equal(err.response.status, 400);
+            assert.include([400,401,403], err.response.status);
             return true
         }
     });
@@ -164,7 +164,7 @@ describe('REST test', async () => {
         try {
             const newMe = {
                 name: 'random_endpoint_' + Math.floor(Math.random() * 10e6),
-                url: 'http://www.validurl.org',
+                url: 'http://www.mozilla.org',
                 userId: u2.id,
                 monitoredInterval: 800000
             };
@@ -191,7 +191,7 @@ describe('REST test', async () => {
         try {
             const newMe = {
                 name: 'another_random_endpoint_' + Math.floor(Math.random() * 10e6),
-                url: 'http://www.wow.org',
+                url: 'http://www.trhvvvvvvvvvv48dwqdszzz.co.uk',
                 userId: u2.id,
                 monitoredInterval: 1000
             };

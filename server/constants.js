@@ -19,12 +19,12 @@ export const DB_DATABASE = process.env.DB_DATABASE;
 export const DB_USER = process.env.DB_USER;
 export const DB_PASSWORD = process.env.DB_PASSWORD;
 
-export const HOST = 'localhost';
-export const PORT = 3000;
+export const HOST = process.env.HOST || 'localhost';
+export const PORT = process.env.PORT || 3000;
 
 export const PROTOCOL = process.env.PROTOCOL || 'http';
 
-export const FAKE_PAYLOAD = !!process.env.FAKE_PAYLOAD;
+export const FAKE_PAYLOAD = (!!process.env.FAKE_PAYLOAD && process.env.FAKE_PAYLOAD !== '0');
 
 export const getErrStatusCode = msg => {
     switch (msg) {

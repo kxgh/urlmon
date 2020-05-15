@@ -1,4 +1,4 @@
-import RestMiddleware from "./RestMiddleware";
+import Controller from "./Controller";
 import {EV_ENDPOINT_CREATED, EV_ENDPOINT_DELETED, EV_ENDPOINT_MODIFIED, FAKE_PAYLOAD} from "./constants"
 import MonitoredEndpoint from "./model/MonitoredEndpoint";
 import MonitoringResult from "./model/MonitoringResult";
@@ -7,7 +7,7 @@ import axios from "axios";
 
 export default class Monitor {
     /**
-     * @param {RestMiddleware} middleware
+     * @param {Controller} middleware
      */
     constructor(middleware) {
         this.middleware = middleware;

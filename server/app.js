@@ -1,5 +1,5 @@
 import Server from "./Server";
-import RestMiddleware from "./RestMiddleware";
+import Controller from "./Controller";
 
 import Monitor from "./Monitor"
 
@@ -12,7 +12,7 @@ const begin = async () => {
     if (!begun) {
         begun = true;
         await dbDao.syncAndStart();
-        const restMiddleware = new RestMiddleware(dbDao);
+        const restMiddleware = new Controller(dbDao);
         new Server(restMiddleware).startServer();
         monitor = new Monitor(restMiddleware);
         monitor.startMonitor();

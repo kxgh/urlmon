@@ -6,7 +6,7 @@ import {EV_ENDPOINT_CREATED, EV_ENDPOINT_DELETED, EV_ENDPOINT_MODIFIED, getErrSt
 const AUTHD_USER_ID = 'authUserId';
 const prs = arg => parseInt(arg) || -1;
 
-export default class RestMiddleware extends EventEmitter {
+export default class Controller extends EventEmitter {
 
     /**
      * @param {Dao} dao
