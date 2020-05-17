@@ -41,12 +41,14 @@ describe('REST test', async () => {
         mr1 = dvs.results[0];
         mr2 = dvs.results[1];
 
-        return await Promise.allSettled([User.create(new User(dvs.users[0])),
-            User.create(new User(dvs.users[1])),
-            MonitoredEndpoint.create(new MonitoredEndpoint(dvs.endpoints[0])),
-            MonitoredEndpoint.create(new MonitoredEndpoint(dvs.endpoints[1])),
-            MonitoringResult.create(new MonitoringResult(dvs.results[0])),
-            MonitoringResult.create(new MonitoringResult(dvs.results[1]))]);
+        // all await so they are in order
+        await User.create(new User(dvs.users[0]));
+        await User.create(new User(dvs.users[1]));
+        await MonitoredEndpoint.create(new MonitoredEndpoint(dvs.endpoints[0]));
+        await MonitoredEndpoint.create(new MonitoredEndpoint(dvs.endpoints[1]));
+        await MonitoringResult.create(new MonitoringResult(dvs.results[0]));
+        await MonitoringResult.create(new MonitoringResult(dvs.results[1]));
+        return true
     });
 
 
@@ -211,7 +213,7 @@ describe('REST test', async () => {
                     const ru = resp.data.results;
                     assert.typeOf(ru, 'array', 'ENDPOINT PROPERTY NOT ARRAY');
                     const ids = new Set(ru.map(ru => ru.endpointId));
-                    assert.equal(ids.size, 1);
+                    assert.isAtLeast(ids.size, 1, 'DID NOT GET AT LEAST ONE RESULT');
                     resolve(true);
                 }, 2000)
             });
