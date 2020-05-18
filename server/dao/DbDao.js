@@ -1,20 +1,28 @@
-import {isTesting, ERR_NOT_FOUND, ERR_INTERNAL, ERR_UNAUTHD, ERR_UNAUTHD_NOT_FOUND} from "../constants";
-import {DB_HOST, DB_PORT, DB_DIALECT, DB_TIMEZONE, DB_DATABASE, DB_PASSWORD, DB_USER} from "../constants";
+import {isMonitorJob, isTesting, ERR_NOT_FOUND, ERR_INTERNAL, ERR_UNAUTHD, ERR_UNAUTHD_NOT_FOUND} from "../constants";
+import {SILENT, DB_HOST, DB_PORT, DB_DIALECT, DB_TIMEZONE, DB_DATABASE, DB_PASSWORD, DB_USER} from "../constants";
 import Dao from ".";
 import User from "../model/User"
 import MonitoredEndpoint from "../model/MonitoredEndpoint"
 import MonitoringResult from "../model/MonitoringResult"
 
-console.log(`Connecting to ${DB_DATABASE} with ${DB_USER} ${isTesting() ? 'testing.' : ''}`);
+console.log(`[urlmon] ### Connecting to ${DB_DATABASE} with ${DB_USER} ${isMonitorJob() ? '(monitor process)' : ''}` +
+    `${isTesting() ? 'testing.' : ''}`);
 
 import {Op, Sequelize} from "sequelize";
 
-const sequelize = new Sequelize(DB_DATABASE, DB_USER, DB_PASSWORD, {
-    host: DB_HOST,
-    port: DB_PORT,
-    dialect: DB_DIALECT,
-    timezone: DB_TIMEZONE
-});
+let sequelize = null;
+try {
+    sequelize = new Sequelize(DB_DATABASE, DB_USER, DB_PASSWORD, {
+        host: DB_HOST,
+        port: DB_PORT,
+        dialect: DB_DIALECT,
+        timezone: DB_TIMEZONE,
+        logging: !SILENT
+    });
+} catch (err) {
+    console.error(err);
+    process.exit(-1);
+}
 
 User.init(User.getAttributes(), {sequelize, timestamps: false, hooks: User.getHooks()});
 MonitoredEndpoint.init(MonitoredEndpoint.getAttributes(User), {
@@ -53,7 +61,15 @@ class DbDao extends Dao {
     }
 
     async syncAndStart() {
-        await sequelize.sync({force: isTesting()});
+        if (!isMonitorJob()) {
+            await sequelize.sync({force: isTesting()});
+            const users = await User.findAll();
+            if (process.argv.includes('--prod') && (!users || !users.length)) {
+                const dvs = require('../../dummyvals');
+                User.create(dvs.users[0]);
+                User.create(dvs.users[1]);
+            }
+        }
         return (this._syncd = true)
     }
 

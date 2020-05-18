@@ -11,7 +11,9 @@ export const EV_ENDPOINT_CREATED = 'New monitored endpoint created';
 export const EV_ENDPOINT_DELETED = 'Monitored endpoint deleted';
 export const EV_ENDPOINT_MODIFIED = 'Monitored endpoint modified';
 
+export const MON_SUBP_ARG = '--mon-job';
 export const isTesting = () => process.argv.includes('--test');
+export const isMonitorJob = () => process.argv.includes(MON_SUBP_ARG);
 
 export const DB_HOST = process.env.DB_HOST || 'localhost';
 export const DB_PORT = process.env.DB_PORT || 3306;
@@ -27,6 +29,7 @@ export const PORT = process.env.PORT || 3000;
 export const PROTOCOL = process.env.PROTOCOL || 'http';
 
 export const FAKE_PAYLOAD = (!!process.env.FAKE_PAYLOAD && process.env.FAKE_PAYLOAD !== '0');
+export const SILENT = (!!process.env.SILENT && process.env.SILENT !== '0');
 
 export const getErrStatusCode = msg => {
     switch (msg) {

@@ -13,7 +13,7 @@ Then just create a `.env` file with your configuration. See [Configuration](#Con
 
 ## Demo run
 
-    npm run start
+    npm run start:dev
 
 ## Tests run
 
@@ -31,7 +31,7 @@ First build it:
     
 And then start the production build:
 
-    npm run start:prod
+    npm run start
     
 # Configuration
 
@@ -48,13 +48,48 @@ These `.env` params use default values if no param provided:
 * `DB_DIALECT` database dialect to be passed for Sequelize ORM. Defaults to `mysql`
 * `DB_TIMEZONE` database dialect. Defaults to `+00:00`
 * `PROTOCOL` app protocol. Either http or https. Defaults to `http`
+* `SILENT` disables sequelize's logging if set to 1
 * `FAKE_PAYLOAD` whether urlmon should fetch actual URL payload or use made up data. Useful for testing purposes.
 Use `1` to use fake payload, otherwise leave empty or set to `0`
+
+## Docker run
+
+In directory with Dockerfile enter:
+
+    docker build -t urlmon .
+
+We'll use that image (with mysql to be pulled) in docker compose file. Create a sample `.env`:
+
+```
+HOST=0.0.0.0
+PORT=3000
+
+FAKE_PAYLOAD=1
+SILENT=1
+
+DB_HOST=db
+DB_PORT=3306
+DB_DIALECT=mysql
+DB_TIMEZONE=+02:00
+DB_DATABASE=urlmon
+DB_USER=urlmonuser
+DB_PASSWORD=password
+PROTOCOL=http
+```
+
+Note that you can set `DB_HOST` to different address in non-container environment (e.g. `localhost`) 
+although compose file assumes the name `db`. Run:
+
+    docker-compose up
+    
+urlmon will keep restarting until mysql db is ready and will be ready with 2 sample users Aladin and Bart. Compose file uses some pre-defined values
+for db settings, change them according to your needs.
+
 
 ### Database
 
 urlmon will create 3 tables upon start:
-* `Users` table of users authorized to use urlmon
+* `Users` table of users authorized to use urlmon. Contains users 'Aladin' and 'Bart' by default (see `dummyvals.json`)
 * `MonitoredEndpoints` table of active monitored endpoints (URLs)
 * `MonitoringResults` table of results
 

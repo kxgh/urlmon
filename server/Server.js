@@ -47,7 +47,7 @@ class Server {
         this.server.del('/:userName/endpoints/:endpointId/', mid.auth, mid.deleteEndpoint);
 
         this.server.listen(port, host, () => {
-            console.log('%s listening at %s', this.server.name, this.server.url);
+            console.log('[%s] ### listening at %s', this.server.name, this.server.url);
         });
     }
 }
