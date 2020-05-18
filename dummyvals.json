@@ -2,13 +2,13 @@
   "users": [
     {
       "id": 1,
-      "userName": "Achilles",
+      "userName": "Aladin",
       "email": "achilll@gmail.com",
       "accessToken": "93f39e2f-80de-4033-99ee-249d92736a25"
     },
     {
       "id": 2,
-      "userName": "Balthasar",
+      "userName": "Bart",
       "email": "baltik@emajl.cz",
       "accessToken": "dcb20f8a-5657-4f1b-9f7f-ce65739b359e"
     }
