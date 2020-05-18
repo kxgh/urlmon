@@ -1,11 +1,11 @@
 {
   "name": "urlmon",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "scripts": {
     "start:dev": "nodemon --exec babel-node -- server/index.js",
     "start": "node build/index.js --prod",
     "start:nodemon": "nodemon build/index.js",
-    "test": "babel-node ./node_modules/mocha/bin/mocha ./server/test --timeout 35000 --test",
+    "test": "babel-node ./node_modules/mocha/bin/mocha ./server/test --timeout 50000 --test",
     "build": "mkdir build && babel -d ./build ./server"
   },
   "repository": {

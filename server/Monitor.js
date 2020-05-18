@@ -50,7 +50,7 @@ export default class Monitor {
             return setInterval(performCheck, endpoint.monitoredInterval)
     }
 
-    startMonitor() {
+    async startMonitor() {
         const modifCallback = modifiedEndpoint => {
             const check = this._checkMap.getCheck(modifiedEndpoint.id);
             const newInterval = modifiedEndpoint.monitoredInterval;
@@ -81,15 +81,24 @@ export default class Monitor {
             throw err
         });
 
-        if(!this.job)
-            this.job = fork(join(__dirname,'monitor-job'),[MON_SUBP_ARG]);
-
         if (!this._cleanupListeners)
             this._cleanupListeners = () => {
                 this.middleware.removeListener(EV_ENDPOINT_MODIFIED, modifCallback);
                 this.middleware.removeListener(EV_ENDPOINT_DELETED, delCallback);
                 this.middleware.removeListener(EV_ENDPOINT_CREATED, createdCallback);
             };
+		return new Promise((resolve)=>{
+			if(!this.job){
+				this.job = fork(join(__dirname,'monitor-job'),[MON_SUBP_ARG]);
+				this.job.on('message',msg=>{
+					if(msg == 'rdy'){
+						console.log('[urlmon] ### child process ready!');
+						resolve(true);
+					}
+				});
+			}
+			else resolve(true);
+		});
     }
 
     terminate() {

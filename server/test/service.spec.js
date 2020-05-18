@@ -215,7 +215,7 @@ describe('REST test', async () => {
                     const ids = new Set(ru.map(ru => ru.endpointId));
                     assert.isAtLeast(ids.size, 1, 'DID NOT GET AT LEAST ONE RESULT');
                     resolve(true);
-                }, 2000)
+                }, 8000)
             });
             try {
                 await timeout

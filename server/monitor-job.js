@@ -60,6 +60,8 @@ const onCheck = async (endpoint) => {
 
 };
 
+process.send('rdy');
+
 process.on('message', msg => {
     onCheck(new MonitoredEndpoint(msg));
 });

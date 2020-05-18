@@ -15,7 +15,7 @@ const begin = async () => {
         const restMiddleware = new Controller(dbDao);
         new Server(restMiddleware).startServer();
         monitor = new Monitor(restMiddleware);
-        monitor.startMonitor();
+        await monitor.startMonitor();
     }
     return {dao: dbDao, monitor}
 };
