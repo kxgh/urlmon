@@ -46,7 +46,7 @@ These `.env` params use default values if no param provided:
 * `HOST` service url. Defaults to `localhost`
 * `PORT` service port. Defaults to `3000`
 * `DB_DIALECT` database dialect to be passed for Sequelize ORM. Defaults to `mysql`
-* `DB_TIMEZONE` database dialect. Defaults to `+00:00`
+* `DB_TIMEZONE` database timezone. Defaults to `+00:00`
 * `PROTOCOL` app protocol. Either http or https. Defaults to `http`
 * `SILENT` disables sequelize's logging if set to 1
 * `FAKE_PAYLOAD` whether urlmon should fetch actual URL payload or use made up data. Useful for testing purposes.
@@ -82,14 +82,14 @@ although compose file assumes the name `db`. Run:
 
     docker-compose up
     
-urlmon will keep restarting until mysql db is ready and will be ready with 2 sample users Aladin and Bart. Compose file uses some pre-defined values
+urlmon will keep restarting until mysql db is ready and will be ready with 2 sample users Applifting and Batman. Compose file uses some pre-defined values
 for db settings, change them according to your needs.
 
 
 ### Database
 
 urlmon will create 3 tables upon start:
-* `Users` table of users authorized to use urlmon. Contains users 'Aladin' and 'Bart' by default (see `dummyvals.json`)
+* `Users` table of users authorized to use urlmon. Contains users 'Applifting' and 'Batman' by default (see `dummyvals.json`)
 * `MonitoredEndpoints` table of active monitored endpoints (URLs)
 * `MonitoringResults` table of results
 
