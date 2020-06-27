@@ -3,6 +3,8 @@
 Restful microservice which allows to monitor particular URLs.
 The service allows basic CRUD operations, background URL monitoring and listing results for a user.
 
+Uses Restify, Sequelize for ORM, Mocha/Chai for tests, Babel for ES6+ transpiling.
+
 ## Setup
 
 Clone or download this repository, then in the target folder:
