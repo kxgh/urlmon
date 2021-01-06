@@ -13,7 +13,7 @@
     "url": "https://github.com/kxgh/urlmon.git"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "dotenv": "^8.2.0",
     "mysql2": "^2.1.0",
     "restify": "^8.5.1",
